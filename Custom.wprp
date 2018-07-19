@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<WindowsPerformanceRecorder
+    Author="JackyPeng"
+    Comments="A Learning to write wprp sample"
+    Company="JackyPeng"
+    Copyright="JackyPeng"
+    Team="JackyPeng"
+    Version="1.0"
+    >
+  <Profiles>
+    <SystemCollector
+        Id="SystemCollector_StackTrace"
+        Name="NT Kernel Logger"
+        >
+      <BufferSize Value="128"/>
+      <Buffers Value="80"/>
+    </SystemCollector>
+
+    <SystemProvider Id="SystemProvider_StackTrace">
+      <Keywords>
+        <Keyword Value="CpuConfig"/>
+        <Keyword Value="Loader"/>
+        <Keyword Value="SampledProfile"/>
+	<Keyword Value="ProcessThread"/>
+      </Keywords>
+      <Stacks>
+        <Stack Value="CSwitch"/>
+	<Stack Value="SampledProfile"/>
+	<Stack Value="ReadyThread"/>
+      </Stacks>
+    </SystemProvider>
+
+    <Profile
+        Description="Sample profile: StackTrace"
+        DetailLevel="Verbose"
+        Id="MyStackTrace.Verbose.File"
+        LoggingMode="File"
+        Name="MyStackTrace"
+        >
+      <ProblemCategories>
+        <ProblemCategory Value="First Level Triage"/>
+      </ProblemCategories>
+      <Collectors>
+        <SystemCollectorId Value="SystemCollector_StackTrace">
+          <SystemProviderId Value="SystemProvider_StackTrace"/>
+        </SystemCollectorId>
+      </Collectors>
+    </Profile>
+
+    <Profile
+        Description="Sample profile: StackTrace"
+        DetailLevel="Verbose"
+        Id="MyStackTrace.Verbose.Memory"
+        LoggingMode="Memory"
+        Name="MyStackTrace"
+        >
+      <Collectors Operation="Add">
+        <SystemCollectorId Value="SystemCollector_StackTrace">
+          <Buffers PercentageOfTotalMemory="true" Value="5"/>
+	  <SystemProviderId Value="SystemProvider_StackTrace"/>
+        </SystemCollectorId>
+      </Collectors>
+    </Profile>
+  </Profiles>
+
+  <TraceMergeProperties>
+    <TraceMergeProperty
+        Id="TraceMerge_Default"
+        Name="TraceMerge_Default"
+        >
+      <DeletePreMergedTraceFiles
+	Value="true"/>
+      <FileCompression
+	Value="true"/>
+      <CustomEvents>
+        <CustomEvent Value="ImageId"/>
+        <CustomEvent Value="BuildInfo"/>
+        <CustomEvent Value="VolumeMapping"/>
+        <CustomEvent Value="EventMetadata"/>
+        <CustomEvent Value="PerfTrackMetadata"/>
+        <CustomEvent Value="WinSAT"/>
+      </CustomEvents>
+    </TraceMergeProperty>
+  </TraceMergeProperties>
+</WindowsPerformanceRecorder>

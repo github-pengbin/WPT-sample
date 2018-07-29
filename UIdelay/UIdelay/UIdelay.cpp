@@ -105,7 +105,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    hInst = hInstance; // 将实例句柄存储在全局变量中
 
-   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW & ~WS_MAXIMIZEBOX & ~WS_THICKFRAME,
       CW_USEDEFAULT, 0, 500, 150, NULL, NULL, hInstance, NULL);
 
    if (!hWnd)
@@ -168,7 +168,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			DestroyWindow(hWnd);
 			break;
 		case IDB_ONE:
-
 			// 我们的按扭响应，点击发生UI Delay
 			for (int i = 0; i <= 1000000; ++i){
 				_tprintf(TEXT("The UI Delay!!!\n"));
